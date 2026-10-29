@@ -2,6 +2,14 @@
 
 🇧🇷 Português · [🇺🇸 English](README.en.md)
 
+[![License: MIT](https://img.shields.io/github/license/thiegocarvalho/zeru-vault)](LICENSE)
+[![Firmware](https://img.shields.io/badge/firmware-2.0.0-blue)](https://github.com/thiegocarvalho/zeru-vault)
+[![ESP32-S3](https://img.shields.io/badge/ESP32--S3-LilyGO%20T--Display--S3-E7352C?logo=espressif&logoColor=white)](#hardware)
+[![FIDO2](https://img.shields.io/badge/FIDO2-WebAuthn%20%7C%20passkeys-4285F4?logo=fidoalliance&logoColor=white)](https://fidoalliance.org/fido2/)
+[![SSH](https://img.shields.io/badge/SSH-ed25519%20%7C%20ed25519--sk-black)](https://www.openssh.com/)
+[![Arduino core](https://img.shields.io/badge/arduino--esp32-3.3.11-00979D?logo=arduino&logoColor=white)](https://github.com/espressif/arduino-esp32)
+[![Last commit](https://img.shields.io/github/last-commit/thiegocarvalho/zeru-vault)](https://github.com/thiegocarvalho/zeru-vault/commits/main)
+
 O **Zeru Vault** transforma uma placa barata **LilyGO T-Display-S3** (ESP32-S3) numa **chave de segurança física** de código aberto, com tela e botões próprios:
 
 - um autenticador **FIDO2 / WebAuthn** para **passkeys** no Chrome, Brave, Edge e Firefox;
