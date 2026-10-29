@@ -1,0 +1,95 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  ESP32_CORE: esp32:esp32@3.3.11
+  GFX_LIBRARY: GFX Library for Arduino@1.6.7
+  ESP32_INDEX: https://espressif.github.io/arduino-esp32/package_esp32_index.json
+
+jobs:
+  firmware:
+    name: Firmware (ESP32-S3)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/setup-arduino-cli@v2
+        with:
+          version: 1.x
+
+      - name: Install ESP32 core and libraries
+        run: |
+          arduino-cli config init --overwrite
+          arduino-cli config add board_manager.additional_urls "$ESP32_INDEX"
+          arduino-cli core update-index
+          arduino-cli core install "$ESP32_CORE"
+          arduino-cli lib install "$GFX_LIBRARY"
+
+      - name: Build firmware
+        run: make build 2>&1 | tee build.log
+
+      - name: Fail on warnings in project files
+        run: |
+          if grep -E "firmware/[^ ]+:[0-9]+:[0-9]+: warning" build.log; then
+            echo "::error::Compiler warnings in project files"
+            exit 1
+          fi
+
+      - name: Size summary
+        run: |
+          echo "### Firmware size" >> "$GITHUB_STEP_SUMMARY"
+          grep -E "Sketch uses|Global variables" build.log | sed 's/^/- /' >> "$GITHUB_STEP_SUMMARY"
+
+  agent:
+    name: SSH agent (Python)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Byte-compile and smoke test
+        run: |
+          python -I -m py_compile agent/ssh_vault_agent.py
+          python -I agent/ssh_vault_agent.py --help > /dev/null
+
+  screenshots:
+    name: UI screenshots
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/setup-arduino-cli@v2
+        with:
+          version: 1.x
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install GFX library and Pillow
+        run: |
+          arduino-cli lib install "$GFX_LIBRARY"
+          python -m pip install --quiet pillow
+
+      - name: Render screens
+        run: make screenshots
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ui-screenshots
+          path: docs/images/*.png

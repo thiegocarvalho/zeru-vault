@@ -2,6 +2,7 @@
 
 🇧🇷 Português · [🇺🇸 English](README.en.md)
 
+[![Build](https://github.com/thiegocarvalho/zeru-vault/actions/workflows/build.yml/badge.svg)](https://github.com/thiegocarvalho/zeru-vault/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/github/license/thiegocarvalho/zeru-vault)](LICENSE)
 [![Firmware](https://img.shields.io/badge/firmware-2.0.0-blue)](https://github.com/thiegocarvalho/zeru-vault)
 [![ESP32-S3](https://img.shields.io/badge/ESP32--S3-LilyGO%20T--Display--S3-E7352C?logo=espressif&logoColor=white)](#hardware)
