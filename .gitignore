@@ -1,0 +1,17 @@
+build/
+dist/
+*.bin
+*.elf
+*.map
+*.hex
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
+

@@ -1,0 +1,5 @@
+# Zeru Vault (ESP32-S3, USB 303a:1001, product "Zeru Vault")
+# - grants the logged-in user access to the CDC serial and FIDO HID interfaces
+# - keeps ModemManager from probing the serial port
+SUBSYSTEM=="tty", ATTRS{idVendor}=="303a", ATTRS{product}=="Zeru Vault", ENV{ID_MM_DEVICE_IGNORE}="1", TAG+="uaccess", SYMLINK+="zeru-vault"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="303a", ATTRS{product}=="Zeru Vault", TAG+="uaccess"
